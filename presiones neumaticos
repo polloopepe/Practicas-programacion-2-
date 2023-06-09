@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define NUM_NEUMATICOS 4
+
+void leerPresionNeumaticos(int* arregloPresiones) {
+    int i;
+    srand(time(NULL)); // Inicializar la semilla aleatoria
+
+    for (i = 0; i < NUM_NEUMATICOS; i++) {
+        arregloPresiones[i] = rand() % 50 + 20; // Generar un número aleatorio entre 20 y 70
+    }
+}
+
+void evaluarPresion(int* arregloPresiones) {
+    int i;
+    int presionMinima, presionMaxima;
+
+    printf("Ingrese el tipo de auto (1: Coche pequeño, 2: Coche mediano, 3: Coche grande): ");
+    int tipoAuto;
+    scanf("%d", &tipoAuto);
+
+    switch (tipoAuto) {
+        case 1:
+            presionMinima = 30;
+            presionMaxima = 35;
+            break;
+        case 2:
+            presionMinima = 32;
+            presionMaxima = 35;
+            break;
+        case 3:
+            presionMinima = 35;
+            presionMaxima = 45;
+            break;
+        default:
+            printf("Tipo de auto no válido\n");
+            return;
+    }
+
+    int warning = 0;
+
+    for (i = 0; i < NUM_NEUMATICOS; i++) {
+        printf("Neumático %d: %d PSI\n", i + 1, arregloPresiones[i]);
+
+        if (arregloPresiones[i] < presionMinima || arregloPresiones[i] > presionMaxima) {
+            printf("El neumático %d está fuera del rango recomendado.\n", i + 1);
+        }
+
+        if (arregloPresiones[i] < presionMinima || arregloPresiones[i] > presionMaxima || arregloPresiones[i] < 20 || arregloPresiones[i] > 70) {
+            warning = 1;
+        }
+    }
+
+    if (warning) {
+        printf("¡ADVERTENCIA! Se ha detectado una presión de neumático fuera de rango.\n");
+    } else {
+        printf("Todos los neumáticos están dentro del rango recomendado.\n");
+    }
+}
+
+void imprimirEstadoNeumaticos(int* arregloPresiones) {
+    int i;
+    printf("Estado de los neumáticos:\n");
+    for (i = 0; i < NUM_NEUMATICOS; i++) {
+        printf("Neumático %d: %d PSI\n", i + 1, arregloPresiones[i]);
+    }
+}
+
+int main() {
+    int presionesNeumaticos[NUM_NEUMATICOS];
+    int opcion;
+    
+    while (1) {
+        printf("\nMenú:\n");
+        printf("1. Leer presión de neumáticos\n");
+        printf("2. Evaluar presión\n");
+        printf("3. Imprimir estado de los neumáticos\n");
+        printf("4. Salir\n");
+        printf("Seleccione una opción: ");
+        scanf("%d", &opcion);
+        
+        switch (opcion) {
+            case 1:
+                leerPresionNeumaticos(presionesNeumaticos);
+                printf("Presiones de los neumáticos leídas.\n");
+                break;
+            case 2:
+                evaluarPresion(presionesNeumaticos);
+                break;
+            case 3:
+                imprimirEstadoNeumaticos(presionesNeumaticos);
+                break;
+            case 4:
+                printf("Saliendo del programa...\n");
+                return 0;
+            default:
+                printf("Opción no válida\n");
+                break;
+        }
+    }
+
+    return 0;
+}
