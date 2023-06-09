@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+struct Persona{
+    char nombre [50];
+    int edad; 
+    float altura;
+};
+int main()
+{
+    struct Persona persona1;
+    
+    //modificar los elementos de la estructura
+    strcpy(persona1.nombre, "pedro");
+    persona1.edad=20;
+    persona1.altura=1.70;
+    
+
+printf("Nombre: %s\n", persona1.nombre);
+printf("Nombre: %d\n", persona1.edad);
+printf("Nombre: %f\n", persona1.altura);
+
+return 0;
+}
